@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const Log = require('./models/log')
+const Log = require('./models/log');
 // db
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, {
@@ -17,7 +17,7 @@ mongoose.connection.once('open',()=>{
 // jsx engine
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}));
 // restful routes
 
 // index
@@ -32,7 +32,7 @@ app.get('/logs/new',(req,res)=>{
 // update
 
 // create
-app.post('/logs',(req,res)=>{
+app.post('/logs',(req,res) => {
   if(req.body.shipIsBroken ==='on') {
      req.body.shipIsBroken = true;
   } else {
@@ -46,7 +46,9 @@ app.post('/logs',(req,res)=>{
     } else {
       res.redirect('/logs');
     }
+  })
 });
+
 // edit
 
 // show
@@ -55,4 +57,4 @@ app.post('/logs',(req,res)=>{
 
 app.listen(PORT,()=>{
   console.log('welcome to port ', PORT);
-})
+});
