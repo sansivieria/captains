@@ -8,7 +8,7 @@ class Show extends React.Component {
         <p>{log.entry}</p>
         <p>ship malfunction: {log.shipIsBroken? 'yes' : 'ship is working' }</p>
         <a href= '/logs'>return home</a><br/>
-        <a href={`/logs/edit/${log._id}`}>edit log</a>
+        <a href={`/logs/edit/${log._id}`}>edit entry</a>
       </div>
     )
   }

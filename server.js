@@ -36,14 +36,45 @@ app.get('/logs', (req, res) => {
   })
 });
 
+
 // new
 app.get('/logs/new',(req,res)=>{
   res.render('New');
 });
 
+
 // delete
+app.delete('/logs/:id', (req, res) => {
+  Log.findByIdAndDelete(req.params.id, (err, showLog) => {
+    if(err) {
+      res.status(404).send({
+        msg: err.message
+      });
+    } else {
+      res.redirect('/logs')
+    }
+  });
+});
+
 
 // update
+app.put('/logs/:id',(req,res) => {
+  if(req.body.shipIsBroken ==='on') {
+     req.body.shipIsBroken = true;
+  } else {
+    req.body.shipIsBroken = false;
+  }
+  Log.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updateLog) => {
+    if(err){
+      res.status(404).send({
+        msg: err.message
+      })
+    } else {
+      res.render('Show', {log: updateLog})
+    }
+  })
+});
+
 
 // create
 app.post('/logs',(req,res) => {
@@ -63,7 +94,20 @@ app.post('/logs',(req,res) => {
   })
 });
 
+
 // edit
+app.get('/logs/edit/:id', (req, res) => {
+  Log.findById(req.params.id, (err, showLog) => {
+    if (err) {
+      res.status(404).send({
+        msg: err.message
+      })
+    } else {
+      res.render('Edit', {log: showLog})
+    }
+  })
+});
+
 
 // show
 app.get('/logs/:id', (req, res) => {
