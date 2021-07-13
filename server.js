@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const methodOverride = require('method-override');
 const app = express();
 const PORT = 3000;
 const Log = require('./models/log');
@@ -18,9 +19,22 @@ mongoose.connection.once('open',()=>{
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride('_method'));
+
 // restful routes
 
 // index
+app.get('/logs', (req, res) => {
+  Log.find({}, (err, indexLog) => {
+    if(err){
+      res.status(404).send({
+        msg: err.message
+      })
+    } else {
+      res.render('Index', {logs: indexLog})
+    }
+  })
+});
 
 // new
 app.get('/logs/new',(req,res)=>{
