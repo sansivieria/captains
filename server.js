@@ -52,6 +52,18 @@ app.post('/logs',(req,res) => {
 // edit
 
 // show
+app.get('/logs/:id', (req, res) => {
+  Log.findById(req.params.id, (err, showLog) => {
+    if (err) {
+      res.status(404).send({
+        msg: err.message
+      })
+    } else {
+      res.render('Show', {log: showLog})
+    }
+  })
+});
+
 
 
 
