@@ -38,7 +38,14 @@ app.post('/logs',(req,res)=>{
   } else {
     req.body.shipIsBroken = false;
   }
-  res.send(req.body);
+  Log.create(req.body, (err, createLog) => {
+    if(err){
+      res.status(404).send({
+        msg: err.message
+      })
+    } else {
+      res.redirect('/logs');
+    }
 });
 // edit
 
